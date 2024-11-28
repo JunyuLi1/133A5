@@ -1,8 +1,8 @@
 """Module for Openweather WebAPI"""
-from WebAPI import WebAPI
+from tools import WebAPI as WenAPI
 
 
-class OpenWeather(WebAPI):
+class OpenWeather(WenAPI.WebAPI):
     """Class of OpenWeather"""
     def __init__(self, zipcode="92697", ccode="US"):
         super().__init__()
