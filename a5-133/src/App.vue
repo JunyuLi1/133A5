@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Header from './components/Header.vue';
+import weather from './weather.vue'
+import todolis from './ToDoLis.vue'
 const currentTime = ref('');
 function updateClock() {
   const now = new Date();
@@ -20,6 +22,8 @@ onMounted(() => {
   <div id="main">
     <div class="clock">{{ currentTime }}</div>
   </div>
+    <weather/>
+    <todolis/>
 </template>
 
 <style>
