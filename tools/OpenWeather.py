@@ -4,11 +4,11 @@ from tools import WebAPI as WenAPI
 
 class OpenWeather(WenAPI.WebAPI):
     """Class of OpenWeather"""
-    def __init__(self, zipcode="92697", ccode="US"):
+    def __init__(self, zipcode="92617", ccode="US", apikey="03657b48a28c90947a8068f1f2608dfc"):
         super().__init__()
         self.zipcode = zipcode
         self.ccode = ccode
-        self.apikey = ''
+        self.apikey = apikey
         self.temperature = 0
         self.high_temperature = 0
         self.low_temperature = 0
@@ -18,13 +18,13 @@ class OpenWeather(WenAPI.WebAPI):
         self.humidity = 0
         self.sunset = 0
         self.city = ''
+        self.url = f"http://api.openweathermap.org/data/2.5/weather?" \
+                  f"zip={self.zipcode},{self.ccode}&appid={self.apikey}"
 
     def load_data(self) -> None:
         """Calls the web api"""
         try:
-            url = f"http://api.openweathermap.org/data/2.5/weather?" \
-                  f"zip={self.zipcode},{self.ccode}&appid={self.apikey}"
-            json_obj = self._download_url(url)
+            json_obj = self._download_url(self.url)
         except Exception as e:
             print(f'Failed to download contents of URL because {e}')
         else:
@@ -51,13 +51,11 @@ class OpenWeather(WenAPI.WebAPI):
 
 def main() -> None:
     """Test API how to run."""
-    zip = "92617"
-    ccode = "US"
-    apikey = "03657b48a28c90947a8068f1f2608dfc"
-    url = f"http://api.openweathermap.org/data/2.5/" \
-          f"weather?zip={zip},{ccode}&appid={apikey}"
-    obj = OpenWeather(zip, ccode)
-    weather_obj = obj._download_url(url)
+    # zip = "92617"
+    # ccode = "US"
+    # apikey = "03657b48a28c90947a8068f1f2608dfc"
+    obj = OpenWeather()
+    weather_obj = obj._download_url(obj.url)
     if weather_obj is not None:
         print(weather_obj)
         print(weather_obj['weather'][0]['description'])
