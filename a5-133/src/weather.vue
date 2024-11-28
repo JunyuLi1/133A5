@@ -4,8 +4,8 @@
 
     const weather = ref([]);
 
-    // 请求天气数据
-    axios.get('http://11.23.3.199:5000/requireWeather')
+    // request weather data
+    axios.get('http://11.23.3.199:5000/requireWeather') // based on backend address
     .then(result => {
         weather.value = result.data['data'];
     })
@@ -16,12 +16,18 @@
 
 <template>
     <br>
-    <p>
+    <p class="weather">
         Today's weather is {{ weather }}.
     </p>
 </template>
 
 <style scoped>
-/* 可根据需要添加样式 */
+    .weather {
+        font-size: 2em;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-top: 20%;
+    }
 </style>
 
