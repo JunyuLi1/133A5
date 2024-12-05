@@ -4,6 +4,7 @@
     cd to folder a5-133 and install following
         - npm install 
         - npm install axios
+        - npm install vue-router@4
 ## How to use?
     run following commend under folder 133A5
         - python3 app.py
