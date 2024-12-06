@@ -1,13 +1,12 @@
 <template>
     <header class="header">
       <div class="logo">
-        <h1>Anteater Weather Checklist</h1>
+        <h1>Anteater ToDoList</h1>
       </div>
       <nav class="nav">
         <ul>
-          <li><a href="#new">New Schedule</a></li>
-          <li><a href="#load">Load</a></li>
-          <li><a href="#log">Log</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/login">ToDoList</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -18,9 +17,8 @@
   </script>
   
   <style scoped>
-  /* Header 样式 */
   .header {
-    position: fixed; /* 固定在页面顶部 */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -31,7 +29,7 @@
     background-color: #66BB6A;
     color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* 确保 header 在最上层 */
+    z-index: 1000;
 }
   
   .logo h1 {

@@ -65,6 +65,7 @@
             .then((response) => {
                 if (response.data.success) {
                     alert(`Welcome, ${this.username}`);
+                    this.$router.push('/todolis');
                 } else {
                 this.errorMessage = response.data.message;
                 }
