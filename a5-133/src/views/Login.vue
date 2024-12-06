@@ -52,13 +52,13 @@
         },
         handleSubmit() {
         if (!this.username || !this.password) {
-            this.errorMessage = "Usearname and password cannot be blank!";
+            this.errorMessage = "Username and password cannot be blank!";
             return;
         }
         this.errorMessage = "";
         if (this.isLogin) {
             axios
-            .post("http://11.23.40.3:5001/login", {
+            .post("http://127.0.0.1:5001/login", {
                 username: this.username,
                 password: this.password
             })
@@ -66,29 +66,29 @@
                 if (response.data.success) {
                     alert(`Welcome, ${this.username}`);
                 } else {
-                this.errorMessage = response.data.message || "Failed!";
+                this.errorMessage = response.data.message;
                 }
             })
             .catch((error) => {
-                alert("Failed to login", error);
-                this.errorMessage = "Server error, please try again later!";
+                this.errorMessage = "Server error, please try again later."
+                alert(this.errorMessage, error);
             });
         } else {
             axios
-            .post("http://11.23.40.3:5001/register", {
+            .post("http://127.0.0.1:5001/register", {
                 username: this.username,
                 password: this.password
             })
             .then((response) => {
                 if (response.data.success) {
-                    alert(`Success! Back to login!`);
+                    alert(`Success, back to login.`);
                 } else {
-                this.errorMessage = response.data.message || "Failed!";
+                this.errorMessage = response.data.message;
                 }
             })
             .catch((error) => {
-                alert("Failed to sign up", error);
-                this.errorMessage = "Server error, please try again later!";
+                this.errorMessage = "Server error, please try again later."
+                alert(this.errorMessage, error);
             });
             this.isLogin = true;
             this.username = "";

@@ -35,16 +35,18 @@ def command_loginUser():
         if result:
             response_data = {
                             "statusCode": 200,
-                            "success": True,
+                            "success": True
                         }
             return jsonify(response_data), 200
         else:
             response_data = {
-                            "statusCode": 404,
+                            "statusCode": 400,
                             "success": False,
+                            "message": "No such user, please sign up"
                         }
+            return jsonify(response_data), 200
     except Exception as e:
-        return jsonify({"statusCode":500,"success": False}), 500
+        return jsonify({"statusCode":500,"success": False, "message": str(e)}), 500
 
 
 @app.route('/register', methods=['POST'])
@@ -53,21 +55,22 @@ def command_registUser():
         data = request.get_json()
         username = data.get("username")
         password = data.get("password")
-        result = databse.request_user(username, password)
+        result = databse.register_user(username, password)
         if result:
             response_data = {
                             "statusCode": 200,
-                            "success": True,
+                            "success": True
                         }
             return jsonify(response_data), 200
         else:
             response_data = {
-                            "statusCode": 404,
+                            "statusCode": 400,
                             "success": False,
+                            "message": "Already exist!"
                         }
         return jsonify(response_data), 200
     except Exception as e:
-        return jsonify({"statusCode":500,"success": False}), 500
+        return jsonify({"statusCode":500,"success": False, "message": str(e)}), 500
 
 
 

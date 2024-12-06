@@ -13,7 +13,7 @@ def load_note():
 def request_user(username, password):
     conn = sqlite3.connect("user.db")
     c = conn.cursor()
-    c.execute("SELECT id FROM users WHERE username=? AND password=?", (username, password))
+    c.execute("SELECT id FROM user WHERE username=? AND password=?", (username, password))
     user = c.fetchone()
     conn.close()
     if user:
