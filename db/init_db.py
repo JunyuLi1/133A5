@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS note (
 """)
 conn.commit()
 
-cursor.execute("INSERT INTO note (user, note) VALUES (?, ?)", (1, "TEST1"))
-cursor.execute("INSERT INTO note (user, note) VALUES (?, ?)", (2, "TEST2"))
+cursor.execute("INSERT INTO note (user, time, note, weather) VALUES (?, ?, ?, ?)", (1, "2024-12-5 17:29:21", "TEST1", "Cloudy"))
+cursor.execute("INSERT INTO note (user, time, note, weather) VALUES (?, ?, ?, ?)", (2, "2024-12-5 17:29:21", "TEST2", "Cloudy"))
 conn.commit()

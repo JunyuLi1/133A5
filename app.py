@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from tools import OpenWeather as op
-
+from db import database as databse
 
 
 app = Flask(__name__)
@@ -24,6 +24,50 @@ def command_addTask():
         return jsonify(response_data), 200
     except Exception as e:
         return jsonify({"statusCode":500,"msg":f"Failed:{e}"}), 500
+
+@app.route('/login', methods=['POST'])
+def command_loginUser():
+    try:
+        data = request.get_json()
+        username = data.get("username")
+        password = data.get("password")
+        result = databse.request_user(username, password)
+        if result:
+            response_data = {
+                            "statusCode": 200,
+                            "success": True,
+                        }
+            return jsonify(response_data), 200
+        else:
+            response_data = {
+                            "statusCode": 404,
+                            "success": False,
+                        }
+    except Exception as e:
+        return jsonify({"statusCode":500,"success": False}), 500
+
+
+@app.route('/register', methods=['POST'])
+def command_registUser():
+    try:
+        data = request.get_json()
+        username = data.get("username")
+        password = data.get("password")
+        result = databse.request_user(username, password)
+        if result:
+            response_data = {
+                            "statusCode": 200,
+                            "success": True,
+                        }
+            return jsonify(response_data), 200
+        else:
+            response_data = {
+                            "statusCode": 404,
+                            "success": False,
+                        }
+        return jsonify(response_data), 200
+    except Exception as e:
+        return jsonify({"statusCode":500,"success": False}), 500
 
 
 if __name__ == '__main__':
