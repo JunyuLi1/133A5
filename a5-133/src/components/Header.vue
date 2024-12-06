@@ -1,12 +1,12 @@
 <template>
     <header class="header">
       <div class="logo">
-        <h1>Anteater ToDoList</h1>
+        <h1><a href="/">Anteater ToDoList</a></h1>
       </div>
       <nav class="nav">
         <ul>
           <li><a href="/login">Login</a></li>
-          <li><a href="/login">ToDoList</a></li>
+          <li><a href="/todolis">ToDoList</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -45,7 +45,9 @@
     display: flex;
     gap: 15px;
   }
-  
+  h1 a{
+    color: #fff;
+  }
   .nav li {
     display: inline;
   }

@@ -10,10 +10,14 @@ def insert_note(username):
 def load_note(username):
     conn = sqlite3.connect("note.db")
     c = conn.cursor()
-    c.execute("SELECT time, note FROM note WHERE username=?", (username,))
+    c.execute("SELECT id, time, description, category FROM note WHERE username=?", (username,))
     user_note = c.fetchall()
     conn.close()
-    return user_note
+    result_note = []
+    for item in user_note:
+        temp = { 'id': item[0], 'time': item[1], 'description': item[2], 'category': item[3] }
+        result_note.append(temp)
+    return result_note
 
 def request_user(username, password):
     conn = sqlite3.connect("user.db")

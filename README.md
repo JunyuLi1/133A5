@@ -31,25 +31,6 @@
     const store = useStore();
     const username = computed(() => store.state.username);
 
-    // 获取用户的 notes（从后端加载）
-    const fetchNotes = async () => {
-    try {
-        const response = await axios.get('http://127.0.0.1:5001/loadTask', {
-                            params: {
-                                username: username.value
-                            }
-                        });
-        if (response.data.success) {
-        todos.value = response.data.note;
-        } else {
-        console.error(response.data.message);
-        }
-    } catch (error) {
-        console.error("Failed to load notes:", error);
-    }
-    };
-
-    // 在组件挂载时加载 notes
-    onMounted(() => {
-    fetchNotes();
-    });
+## Problem
+    1. add delete edit feature with db
+    2. new user/add
