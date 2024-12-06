@@ -1,4 +1,5 @@
 <template>
+    <Header />
 <div id="login">
     <div class="container">
     <h1>{{ isLogin ? "Login" : "Sign up" }}</h1>
@@ -33,8 +34,9 @@
 
 <script>
     import axios from 'axios';
-
+    import Header from '@/components/Header.vue';
     export default {
+        components:{Header},
     data() {
         return {
         isLogin: true,

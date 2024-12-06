@@ -1,7 +1,7 @@
 <template>
     <header class="header">
       <div class="logo">
-        <h1>Anteater ToDoList</h1>
+        <h1><a href="/">Anteater ToDoList</a></h1>
       </div>
       <nav class="nav">
         <ul>
@@ -45,7 +45,9 @@
     display: flex;
     gap: 15px;
   }
-  
+  h1 a{
+    color: #fff;
+  }
   .nav li {
     display: inline;
   }
