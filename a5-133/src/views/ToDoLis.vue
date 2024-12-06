@@ -62,27 +62,54 @@
   const store = useStore();
   const username = computed(() => store.state.username);
   
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!form.value.time || !form.value.description || !form.value.category) return
     if (isEditing.value && editingTaskId.value !== null) {
       const index = tasks.value.findIndex(task => task.id === editingTaskId.value)
       if (index !== -1) {
-        tasks.value[index] = {
+        const updatedTask = {
           ...tasks.value[index],
           time: form.value.time,
           description: form.value.description,
           category: form.value.category
+        };
+        try {
+          const response = await axios.post('http://127.0.0.1:5001/editTask', {
+          username: username.value,
+          time: form.value.time,
+          description: form.value.description,
+          category: form.value.category
+        });
+        if (response.data.success) {
+          alert("Success!");
+          tasks.value[index] = updatedTask;
+          resetForm()
+        }
+        } catch (error) {
+            alert(error.message, error);
         }
       }
-      resetForm()
     } else {
-      tasks.value.push({
-        id: currentId++,
-        time: form.value.time,
-        description: form.value.description,
-        category: form.value.category
-      })
-      resetForm()
+      try {
+          const response = await axios.post('http://127.0.0.1:5001/insertTask', {
+          username: username.value,
+          time: form.value.time,
+          description: form.value.description,
+          category: form.value.category
+        });
+        if (response.data.success) {
+          alert("Success!");
+          tasks.value.push({
+            id: currentId++,
+            time: form.value.time,
+            description: form.value.description,
+            category: form.value.category
+          })
+          resetForm()
+        }
+      } catch (error) {
+          alert(error.message, error);
+      }
     }
   }
   

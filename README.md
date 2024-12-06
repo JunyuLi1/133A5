@@ -32,5 +32,6 @@
     const username = computed(() => store.state.username);
 
 ## Problem
-    1. add delete edit feature with db
-    2. new user/add
+    1. add delete with db
+    2. sort time
+    3. time format change

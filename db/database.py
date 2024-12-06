@@ -1,10 +1,33 @@
 import sqlite3
 
 
-def insert_note(username):
+def edit_note(id, username, time, description, category):
+    status = False
     conn = sqlite3.connect("note.db")
-    c = conn.cursor
-    pass
+    c = conn.cursor()
+    try:
+        c.execute("UPDATE note SET username = ?, time = ?, description = ?, category = ? WHERE id= ?", (username, time, description, category, id))
+        conn.commit()
+        status = True
+    except sqlite3.IntegrityError:
+        pass
+    finally:
+        conn.close()
+        return status
+
+def insert_note(username, time, description, category):
+    status = False
+    conn = sqlite3.connect("note.db")
+    c = conn.cursor()
+    try:
+        c.execute("INSERT INTO note (username, time, description, category) VALUES (?, ?, ?, ?)", (username, time, description, category))
+        conn.commit()
+        status = True
+    except sqlite3.IntegrityError:
+        pass
+    finally:
+        conn.close()
+        return status
 
 
 def load_note(username):

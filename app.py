@@ -99,9 +99,10 @@ def command_insertNoteTask():
     try:
         data = request.get_json()
         username = data.get("username")
-        note = data.get("note")
         time = data.get("time")
-        result = databse.insert_note(username, time, note)
+        description = data.get("description")
+        category = data.get("category")
+        result = databse.insert_note(username, time, description, category)
         if result:
             response_data = {
                             "statusCode": 200,
@@ -117,6 +118,31 @@ def command_insertNoteTask():
     except Exception as e:
         return jsonify({"statusCode":500,"success": False, "message": str(e)}), 500
 
+@app.route('/editTask', methods=['POST'])
+def command_editNoteTask():
+    try:
+        data = request.get_json()
+        id = data.get("id")
+        username = data.get("username")
+        time = data.get("time")
+        description = data.get("description")
+        category = data.get("category")
+        result = databse.edit_note(id, username, time, description, category)
+        if result:
+            response_data = {
+                            "statusCode": 200,
+                            "success": True
+                        }
+            return jsonify(response_data), 200
+        else:
+            response_data = {
+                            "statusCode": 400,
+                            "message": "No such user, please sign up"
+                        }
+            return jsonify(response_data), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"statusCode":500,"success": False, "message": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=5001)
