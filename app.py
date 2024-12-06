@@ -73,6 +73,50 @@ def command_registUser():
         return jsonify({"statusCode":500,"success": False, "message": str(e)}), 500
 
 
+@app.route('/loadTask', methods=['GET'])
+def command_loadNoteTask():
+    try:
+        username = request.args.get("username")
+        result = databse.load_note(username)
+        if result:
+            response_data = {
+                            "statusCode": 200,
+                            "success": True,
+                            "note": result
+                        }
+            return jsonify(response_data), 200
+        else:
+            response_data = {
+                            "statusCode": 400,
+                            "message": "No such user, please sign up"
+                        }
+            return jsonify(response_data), 200
+    except Exception as e:
+        return jsonify({"statusCode":500,"success": False, "message": str(e)}), 500
+
+@app.route('/insertTask', methods=['POST'])
+def command_insertNoteTask():
+    try:
+        data = request.get_json()
+        username = data.get("username")
+        note = data.get("note")
+        time = data.get("time")
+        result = databse.insert_note(username, time, note)
+        if result:
+            response_data = {
+                            "statusCode": 200,
+                            "success": True
+                        }
+            return jsonify(response_data), 200
+        else:
+            response_data = {
+                            "statusCode": 400,
+                            "message": "No such user, please sign up"
+                        }
+            return jsonify(response_data), 200
+    except Exception as e:
+        return jsonify({"statusCode":500,"success": False, "message": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=5001)

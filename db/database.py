@@ -1,14 +1,19 @@
 import sqlite3
 
 
-def insert_note():
+def insert_note(username):
     conn = sqlite3.connect("note.db")
     c = conn.cursor
     pass
 
 
-def load_note():
-    pass
+def load_note(username):
+    conn = sqlite3.connect("note.db")
+    c = conn.cursor()
+    c.execute("SELECT time, note FROM note WHERE username=?", (username,))
+    user_note = c.fetchall()
+    conn.close()
+    return user_note
 
 def request_user(username, password):
     conn = sqlite3.connect("user.db")
@@ -37,3 +42,6 @@ def register_user(username, password):
     finally:
         conn.close()
         return status
+
+if __name__ == "__main__":
+    print(load_note("VC1"))

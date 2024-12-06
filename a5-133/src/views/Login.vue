@@ -65,6 +65,8 @@
             .then((response) => {
                 if (response.data.success) {
                     alert(`Welcome, ${this.username}`);
+                    sessionStorage.setItem('username', this.username);
+                    this.$store.dispatch('updateUsername', this.username);
                     this.$router.push('/todolis');
                 } else {
                 this.errorMessage = response.data.message;
