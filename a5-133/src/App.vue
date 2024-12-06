@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import Header from './components/Header.vue';
 import weather from './weather.vue'
+import Login from '@/views/Login.vue'
 // import todolis from './views/ToDoLis.vue'
 const currentTime = ref('');
 function updateClock() {
@@ -19,11 +20,12 @@ onMounted(() => {
 
 <template>
   <Header />
-  <div id="main">
+  <Login/>
+  <!-- <div id="main">
     <div class="clock">{{ currentTime }}</div>
   </div>
     <weather/>
-    <todolis/>
+    <todolis/> -->
 </template>
 
 <style>
