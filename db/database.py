@@ -24,13 +24,16 @@ def request_user(username, password):
 
 def register_user(username, password):
     # regist user
+    status = False
     conn = sqlite3.connect("user.db")
     c = conn.cursor()
     try:
         c.execute("INSERT INTO user (username, password) VALUES (?, ?)", (username, password))
         conn.commit()
         print("User registered successfully!")
+        status = True
     except sqlite3.IntegrityError:
         print("User already exists!")
     finally:
         conn.close()
+        return status
