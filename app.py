@@ -143,6 +143,31 @@ def command_editNoteTask():
     except Exception as e:
         print(e)
         return jsonify({"statusCode":500,"success": False, "message": str(e)}), 500
+    
+@app.route('/deleteTask', methods = ['POST'])
+def command_deleteNote():
+    try:
+
+        data = request.get_json()
+        id = data.get("id")
+        result = databse.delete_note(id)
+        if result:
+            response_data = {
+                            "statusCode": 200,
+                            "success": True
+                        }
+            return jsonify(response_data), 200
+        else:
+            response_data = {
+                            "statusCode": 400,
+                            "message": "Fail to delete"
+                        }
+            return jsonify(response_data), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({"statusCode":500,"success": False, "message": str(e)}), 500
+    
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=5001)

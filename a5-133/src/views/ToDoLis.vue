@@ -25,7 +25,7 @@
           <div class="task-list-container">
             <ul class="todo-list">
               <li v-for="task in tasks" :key="task.id" class="todo-item">
-                <div class="task-info">
+                <div class="task-info" :class="{'text-red': isPast(task.time)}">
                   <strong>{{ task.time }}</strong> | {{ task.description }} ({{ task.category }})
                 </div>
                 <div class="task-actions">
@@ -46,7 +46,7 @@
   import axios from 'axios';
   import { useStore } from 'vuex';
   
-  let currentId = 1
+//   let currentId = 1
   
   const tasks = ref([])
   
@@ -61,20 +61,29 @@
     // username from session
   const store = useStore();
   const username = computed(() => store.state.username);
+
+  
+  const isPast = (time) => {
+    const currentTime = new Date();
+    const taskTime = new Date(time);
+    return taskTime < currentTime;
+};
   
   const handleSubmit = async () => {
     if (!form.value.time || !form.value.description || !form.value.category) return
     if (isEditing.value && editingTaskId.value !== null) {
       const index = tasks.value.findIndex(task => task.id === editingTaskId.value)
+      console.log(index)
       if (index !== -1) {
-        const updatedTask = {
-          ...tasks.value[index],
-          time: form.value.time,
-          description: form.value.description,
-          category: form.value.category
-        };
+        // const updatedTask = {
+        //   ...tasks.value[index],
+        //   time: form.value.time,
+        //   description: form.value.description,
+        //   category: form.value.category
+        // };
         try {
           const response = await axios.post('http://127.0.0.1:5001/editTask', {
+          id: editingTaskId.value,
           username: username.value,
           time: form.value.time,
           description: form.value.description,
@@ -82,7 +91,7 @@
         });
         if (response.data.success) {
           alert("Success!");
-          tasks.value[index] = updatedTask;
+          fetchNotes()
           resetForm()
         }
         } catch (error) {
@@ -99,12 +108,7 @@
         });
         if (response.data.success) {
           alert("Success!");
-          tasks.value.push({
-            id: currentId++,
-            time: form.value.time,
-            description: form.value.description,
-            category: form.value.category
-          })
+          fetchNotes();
           resetForm()
         }
       } catch (error) {
@@ -114,6 +118,7 @@
   }
   
   const editTask = (task) => {
+    console.log(task.id)
     isEditing.value = true
     editingTaskId.value = task.id
     form.value = {
@@ -123,8 +128,18 @@
     }
   }
   
-  const deleteTask = (id) => {
-    tasks.value = tasks.value.filter(task => task.id !== id)
+  const deleteTask = async (task_id) => {
+    try {
+          const response = await axios.post('http://127.0.0.1:5001/deleteTask', {
+          id: task_id
+        });
+        if (response.data.success) {
+          alert("Success!");
+        }
+      } catch (error) {
+          alert(error.message, error);
+      }
+    tasks.value = tasks.value.filter(task => task.id !== task_id)
   }
   
   const resetForm = () => {
@@ -261,6 +276,11 @@
   .task-info {
     max-width: 60%;
     word-wrap: break-word;
+  }
+  .text-red {
+    max-width: 60%;
+    word-wrap: break-word;
+    color: red;
   }
   .task-actions {
     display: flex;

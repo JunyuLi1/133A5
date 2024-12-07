@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 
 def edit_note(id, username, time, description, category):
@@ -28,18 +29,34 @@ def insert_note(username, time, description, category):
     finally:
         conn.close()
         return status
+    
+def delete_note(id):
+    status = False
+    conn = sqlite3.connect("note.db")
+    c = conn.cursor()
+    try:
+        c.execute("DELETE FROM note WHERE id = ?", (id,))
+        conn.commit()
+        status = True
+    except sqlite3.Error as e:
+        print(e)
+    finally:
+        conn.close()
+        return status
+
 
 
 def load_note(username):
     conn = sqlite3.connect("note.db")
     c = conn.cursor()
-    c.execute("SELECT id, time, description, category FROM note WHERE username=?", (username,))
+    c.execute("SELECT id, time, description, category FROM note WHERE username=? ORDER BY time ASC", (username,))
     user_note = c.fetchall()
     conn.close()
     result_note = []
     for item in user_note:
-        temp = { 'id': item[0], 'time': item[1], 'description': item[2], 'category': item[3] }
+        temp = { 'id': item[0], 'time': item[1].replace("T", " "), 'description': item[2], 'category': item[3] }
         result_note.append(temp)
+
     return result_note
 
 def request_user(username, password):

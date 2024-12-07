@@ -22,16 +22,3 @@
         components: folder that contains different vue component
         App.vue: main app
         
-        import { ref, computed, onMounted } from 'vue';
-    import axios from 'axios';
-    import { useStore } from 'vuex';
-
-    const todos = ref([]);
-
-    const store = useStore();
-    const username = computed(() => store.state.username);
-
-## Problem
-    1. add delete with db
-    2. sort time
-    3. time format change
