@@ -7,7 +7,7 @@
         <ul>
           <li><a href="/login">Login</a></li>
           <li><a href="/todolis">ToDoList</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="mailto:yuxid5@uci.edu">Contact</a></li>
         </ul>
       </nav>
     </header>
